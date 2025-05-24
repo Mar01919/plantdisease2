@@ -12,6 +12,7 @@ if not os.path.exists(MODEL_PATH):
     gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
 
 
+
 # Función de predicción
 def model_prediction(test_image):
     model = tf.keras.models.load_model(MODEL_PATH)
@@ -31,9 +32,11 @@ app_mode = st.sidebar.selectbox("Elige Página",["Inicio","Acerca de","Reconocim
 #Main Page
 if(app_mode=="Inicio"):
     st.header("SISTEMA DE RECONOCIMIENTO DE ENFERMEDADES DE PLANTAS")
-    image_path = "home_page.jpeg"
-    #st.image(image_path,use_column_width=True)
+    #image_path = "home_page.jpeg"
+    image_path = os.path.join(os.path.dirname(__file__), "home_page.jpeg")
+    #----- st.image(image_path,use_column_width=True)
     st.image(image_path,use_container_width=True) 
+
     st.markdown("""
 ¡Bienvenido al Sistema de Reconocimiento de Enfermedades de las Plantas! 🌿🔍
     
