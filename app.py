@@ -84,8 +84,8 @@ elif(app_mode=="Reconocimiento de enfermedad"):
     st.header("Reconocimiento de enfermedad")
     test_image = st.file_uploader("Escoge una imagen:")
     if(st.button("Muestra Imagen")):
-        #st.image(test_image,width=4,use_column_width=True)
-        st.image(test_image,width=4,use_container_width=True)
+        st.image(test_image,width=4,use_column_width=True)
+        #st.image(test_image,width=4,use_container_width=True)
     #Predict button
     if(st.button("Predicción")):
         st.balloons()
