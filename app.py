@@ -11,7 +11,15 @@ if not os.path.exists(MODEL_PATH):
     url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
     gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
 
+#lllllllll
+if not os.path.exists(MODEL_PATH):
+    st.error(f"Modelo no encontrado en la ruta: {MODEL_PATH}")
 
+with open(MODEL_PATH, "rb") as f:
+    head = f.read(256)
+    print("Inicio del archivo:", head[:100])
+
+#llllllllllllll
 
 # Función de predicción
 def model_prediction(test_image):
