@@ -1,6 +1,6 @@
 import os
 import gdown
-#-----------------------------
+#-------------------------------
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -34,8 +34,12 @@ if(app_mode=="Inicio"):
     st.header("SISTEMA DE RECONOCIMIENTO DE ENFERMEDADES DE PLANTAS")
     #image_path = "home_page.jpeg"
     image_path = os.path.join(os.path.dirname(__file__), "home_page.jpeg")
+    if not os.path.exists(image_path):
+        st.error(f"No se encontró la imagen en la ruta: {os.path.abspath(image_path)}")
+    else:
+        st.image(image_path, use_container_width=True)
     #----- st.image(image_path,use_column_width=True)
-    st.image(image_path,use_container_width=True) 
+    #st.image(image_path,use_container_width=True) 
 
     st.markdown("""
 ¡Bienvenido al Sistema de Reconocimiento de Enfermedades de las Plantas! 🌿🔍
