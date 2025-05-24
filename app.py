@@ -37,7 +37,7 @@ if(app_mode=="Inicio"):
     if not os.path.exists(image_path):
         st.error(f"No se encontró la imagen en la ruta: {os.path.abspath(image_path)}")
     else:
-        st.image(image_path, use_container_width=True)
+        st.image(image_path,use_column_width=True)
     #----- st.image(image_path,use_column_width=True)
     #st.image(image_path,use_container_width=True) 
 
