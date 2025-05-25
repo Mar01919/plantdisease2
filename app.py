@@ -4,6 +4,7 @@ import gdown
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+import requests
 #-------------------------------
 #DDDDDDDDDDDDDD
 MODEL_PATH = "Eva1.h5"
