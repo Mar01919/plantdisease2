@@ -6,28 +6,29 @@ import tensorflow as tf
 import numpy as np
 #-------------------------------
 #DDDDDDDDDDDDDD
-MODEL_PATH = "trained_plant_disease_model.h5"
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
+MODEL_PATH = "Eva1.h5"
+MODEL_URL = "https://marcelacastillo.com/Eva1.h5"  # <-- cambia esto
 
 if not os.path.exists(MODEL_PATH):
     try:
-        st.info("Descargando modelo desde Google Drive...")
-        gdown.download(MODEL_URL, MODEL_PATH, quiet=False, fuzzy=True)
+        st.info("Descargando modelo desde servidor HostGator...")
+        response = requests.get(MODEL_URL)
+        if response.status_code == 200:
+            with open(MODEL_PATH, 'wb') as f:
+                f.write(response.content)
+        else:
+            st.error(f"❌ Error al descargar modelo. Código: {response.status_code}")
+            st.stop()
     except Exception as e:
-        st.error(f"❌ Error al intentar descargar el modelo: {e}")
+        st.error(f"❌ Falló la descarga del modelo: {e}")
         st.stop()
 
 if not os.path.exists(MODEL_PATH):
-    st.error(f"❌ Modelo no encontrado en la ruta: {MODEL_PATH}")
+    st.error("❌ Modelo no encontrado después de la descarga.")
     st.stop()
+else:
+    st.success("✅ Modelo descargado y verificado correctamente.")
 
-with open(MODEL_PATH, "rb") as f:
-    head = f.read(256)
-    if b"<html" in head.lower():
-        st.error("⚠️ El archivo descargado no es un modelo válido (.h5), parece una página HTML.")
-        st.stop()
-    else:
-        st.success("✅ Modelo verificado correctamente.")
 
 #llllllllllllll
 
