@@ -7,9 +7,8 @@ import numpy as np
 #-------------------------------
 #DDDDDDDDDDDDDD
 MODEL_PATH = "trained_plant_disease_model.h5"
-MODEL_URL = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"  # sin &export=download
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
 
-# Descargar el modelo si no existe
 if not os.path.exists(MODEL_PATH):
     try:
         st.info("Descargando modelo desde Google Drive...")
@@ -18,12 +17,10 @@ if not os.path.exists(MODEL_PATH):
         st.error(f"❌ Error al intentar descargar el modelo: {e}")
         st.stop()
 
-# Verificar si se descargó correctamente
 if not os.path.exists(MODEL_PATH):
     st.error(f"❌ Modelo no encontrado en la ruta: {MODEL_PATH}")
     st.stop()
 
-# Verificar que el archivo no sea HTML (descarga fallida silenciosa)
 with open(MODEL_PATH, "rb") as f:
     head = f.read(256)
     if b"<html" in head.lower():
