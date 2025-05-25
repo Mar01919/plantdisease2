@@ -8,15 +8,21 @@ import requests
 #-------------------------------
 #DDDDDDDDDDDDDD
 MODEL_PATH = "Eva1.h5"
-MODEL_URL = "https://marcelacastillo.com/Eva1.h5"  # <-- cambia esto
+MODEL_URL = "https://marcelacastillo.com/Eva1.h5"  # ← Cambia esto por tu dominio real
+
+headers = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "*/*"
+}
 
 if not os.path.exists(MODEL_PATH):
     try:
         st.info("Descargando modelo desde servidor HostGator...")
-        response = requests.get(MODEL_URL)
+        response = requests.get(MODEL_URL, headers=headers)
         if response.status_code == 200:
             with open(MODEL_PATH, 'wb') as f:
                 f.write(response.content)
+            st.success("✅ Modelo descargado correctamente.")
         else:
             st.error(f"❌ Error al descargar modelo. Código: {response.status_code}")
             st.stop()
@@ -27,8 +33,6 @@ if not os.path.exists(MODEL_PATH):
 if not os.path.exists(MODEL_PATH):
     st.error("❌ Modelo no encontrado después de la descarga.")
     st.stop()
-else:
-    st.success("✅ Modelo descargado y verificado correctamente.")
 
 
 #llllllllllllll
