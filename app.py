@@ -5,11 +5,43 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 #-------------------------------
-# Descarga el modelo si no existe localmente
+# Descarga el modelo si no existe localmente    #FILE_ID = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
 MODEL_PATH = "trained_plant_disease_model.h5"
+FILE_ID = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
+URL = f"https://drive.google.com/uc?id={FILE_ID}&export=download"
+
+#Descargar modelo si no existe
 if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
-    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+    #url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
+    st.info("🔄 Descargando modelo desde Google Drive...")
+    try:
+        gdown.download(URL, MODEL_PATH, quiet=False, fuzzy=True)
+    except Exception as e:
+        st.error(f"❌ Falló la descarga: {e}")
+        st.stop()
+
+#Verificar archivo descargado
+if os.path.exists(MODEL_PATH):
+    size = os.path.getsize(MODEL_PATH)
+    st.success(f"📦 Modelo descargado. Tamaño: {size} bytes")
+    if size < 10000:
+        st.error("❌ El archivo parece estar corrupto (muy pequeño).")
+        st.stop()
+
+    with open(MODEL_PATH, "rb") as f:
+        head = f.read(100)
+        st.code(head)  # Muestra los primeros bytes del archivo
+else:
+    st.error("❌ El archivo no existe tras la descarga.")
+    st.stop()
+
+#Cargar el modelo
+try:
+    model = tf.keras.models.load_model(MODEL_PATH)
+    st.success("✅ Modelo cargado correctamente.")
+except Exception as e:
+    st.error(f"❌ Error al cargar el modelo: {e}")
+    st.stop()
 
 
 
