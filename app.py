@@ -12,13 +12,14 @@ URL = f"https://drive.google.com/uc?id={FILE_ID}&export=download"
 
 #Descargar modelo si no existe
 if not os.path.exists(MODEL_PATH):
-    #url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
     st.info("🔄 Descargando modelo desde Google Drive...")
-    try:
-        gdown.download(URL, MODEL_PATH, quiet=False, fuzzy=True)
-    except Exception as e:
-        st.error(f"❌ Falló la descarga: {e}")
+    output = gdown.download(URL, MODEL_PATH, quiet=False, fuzzy=True)
+
+    if output is None or not os.path.exists(MODEL_PATH):
+        st.error("❌ La descarga falló o el archivo no se guardó.")
         st.stop()
+    else:
+        st.success("✅ Modelo descargado correctamente.")
 
 #Verificar archivo descargado
 if os.path.exists(MODEL_PATH):
