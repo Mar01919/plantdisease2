@@ -5,10 +5,20 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 #-------------------------------
-# Descarga el modelo si no existe localmente    #FILE_ID = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
+
+
+
+# Descarga el modelo si no existe localmente
 MODEL_PATH = "trained_plant_disease_model.h5"
-FILE_ID = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
-URL = f"https://drive.google.com/uc?id={FILE_ID}&export=download"
+if not os.path.exists(MODEL_PATH):
+    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
+    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+
+'''
+#MODEL_PATH = "trained_plant_disease_model.h5"
+#FILE_ID = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
+#URL = f"https://drive.google.com/uc?id={FILE_ID}&export=download"
+
 
 #Descargar modelo si no existe
 if not os.path.exists(MODEL_PATH):
@@ -43,6 +53,7 @@ try:
 except Exception as e:
     st.error(f"❌ Error al cargar el modelo: {e}")
     st.stop()
+'''
 
 
 
