@@ -4,36 +4,14 @@ import gdown
 import streamlit as st
 import tensorflow as tf
 import numpy as np
-import requests
 #-------------------------------
-#DDDDDDDDDDDDDD
-
-
-MODEL_PATH = "Eva1.h5"
-MODEL_URL = "https://marcelacastillo.com/Eva1.txt"  # ← Cambia esto por tu dominio real
-
+# Descarga el modelo si no existe localmente
+MODEL_PATH = "trained_plant_disease_model.h5"
 if not os.path.exists(MODEL_PATH):
-    try:
-        st.info("📥 Descargando modelo desde servidor HostGator...")
-        response = requests.get(MODEL_URL)
-        if response.status_code == 200:
-            with open(MODEL_PATH, 'wb') as f:
-                f.write(response.content)
-            st.success("✅ Modelo descargado correctamente.")
-        else:
-            st.error(f"❌ Error al descargar modelo. Código: {response.status_code}")
-            st.stop()
-    except Exception as e:
-        st.error(f"❌ Falló la descarga del modelo: {e}")
-        st.stop()
-
-if not os.path.exists(MODEL_PATH):
-    st.error("❌ Modelo no encontrado después de la descarga.")
-    st.stop()
+    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
+    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
 
 
-
-#llllllllllllll
 
 # Función de predicción
 def model_prediction(test_image):
