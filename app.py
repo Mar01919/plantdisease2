@@ -5,19 +5,32 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 #-------------------------------
-# Descarga el modelo si no existe localmente
+#DDDDDDDDDDDDDD
 MODEL_PATH = "trained_plant_disease_model.h5"
-if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
-    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+MODEL_URL = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"  # sin &export=download
 
-#lllllllll
+# Descargar el modelo si no existe
 if not os.path.exists(MODEL_PATH):
-    st.error(f"Modelo no encontrado en la ruta: {MODEL_PATH}")
+    try:
+        st.info("Descargando modelo desde Google Drive...")
+        gdown.download(MODEL_URL, MODEL_PATH, quiet=False, fuzzy=True)
+    except Exception as e:
+        st.error(f"❌ Error al intentar descargar el modelo: {e}")
+        st.stop()
 
+# Verificar si se descargó correctamente
+if not os.path.exists(MODEL_PATH):
+    st.error(f"❌ Modelo no encontrado en la ruta: {MODEL_PATH}")
+    st.stop()
+
+# Verificar que el archivo no sea HTML (descarga fallida silenciosa)
 with open(MODEL_PATH, "rb") as f:
     head = f.read(256)
-    print("Inicio del archivo:", head[:100])
+    if b"<html" in head.lower():
+        st.error("⚠️ El archivo descargado no es un modelo válido (.h5), parece una página HTML.")
+        st.stop()
+    else:
+        st.success("✅ Modelo verificado correctamente.")
 
 #llllllllllllll
 
