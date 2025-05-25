@@ -7,18 +7,15 @@ import numpy as np
 import requests
 #-------------------------------
 #DDDDDDDDDDDDDD
-MODEL_PATH = "Eva1.h5"
-MODEL_URL = "https://marcelacastillo.com/Eva1.h5"  # ← Cambia esto por tu dominio real
 
-headers = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "*/*"
-}
+
+MODEL_PATH = "Eva1.h5"
+MODEL_URL = "https://marcelacastillo.com/Eva1.txt"  # ← Cambia esto por tu dominio real
 
 if not os.path.exists(MODEL_PATH):
     try:
-        st.info("Descargando modelo desde servidor HostGator...")
-        response = requests.get(MODEL_URL, headers=headers)
+        st.info("📥 Descargando modelo desde servidor HostGator...")
+        response = requests.get(MODEL_URL)
         if response.status_code == 200:
             with open(MODEL_PATH, 'wb') as f:
                 f.write(response.content)
@@ -33,6 +30,7 @@ if not os.path.exists(MODEL_PATH):
 if not os.path.exists(MODEL_PATH):
     st.error("❌ Modelo no encontrado después de la descarga.")
     st.stop()
+
 
 
 #llllllllllllll
