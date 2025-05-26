@@ -24,7 +24,7 @@ def download_and_load_model():
     urllib.request.urlretrieve(url, output_path)
 
     #Cargar el modelo
-    model = load_model(output_path)
+    model = tf.keras.models.load_model(output_path)
     return model
 
 with st.spinner("Descargando y cargando modelo..."):
