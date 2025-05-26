@@ -16,7 +16,7 @@ import urllib.request
 
 st.title("Carga de modelo desde Dropbox (sin requests)")
 
-@st.cache_resource
+@st.cache(allow_output_mutation=True)
 def download_and_load_model():
     url = "https://www.dropbox.com/scl/fi/ho1zdsywpknz4h919i1yq/trained_plant_disease_model.h5?rlkey=5fbpavp394e5zkna92kpipasw&st=s526h6yy&dl=1"
     output_path = "modelo.h5"
