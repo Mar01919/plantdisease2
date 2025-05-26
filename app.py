@@ -4,8 +4,6 @@ import gdown
 import streamlit as st
 import tensorflow as tf
 import numpy as np
-import urllib.request
-
 #-------------------------------
 # Descarga el modelo si no existe localmente
 MODEL_PATH = "trained_plant_disease_model.h5"
@@ -15,11 +13,10 @@ if not os.path.exists(MODEL_PATH):
 
 
 
-
 # Función de predicción
 def model_prediction(test_image):
     model = tf.keras.models.load_model(MODEL_PATH)
-
+    #model = tf.keras.models.load_model("trained_plant_disease_model.h5")
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(128,128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr])  # convertir en batch
@@ -95,7 +92,6 @@ elif(app_mode=="Reconocimiento de enfermedad"):
         #st.snow()
         st.write("Nuestra Predicción")
         result_index = model_prediction(test_image)
-  
         #Reading Labels
         class_name = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
                     'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew', 
