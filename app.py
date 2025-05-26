@@ -10,8 +10,10 @@ import urllib.request #quitar
 # Descarga el modelo si no existe localmente
 MODEL_PATH = "trained_plant_disease_model.h5"
 if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
-    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+    #url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
+    #gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+    file_id = "1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e"
+    gdown.download(id=file_id, output=MODEL_PATH, quiet=False)
 
 
 # Descarga el modelo si no existe localmente
