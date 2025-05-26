@@ -4,19 +4,41 @@ import gdown
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+import urllib.request
+
 #-------------------------------
 # Descarga el modelo si no existe localmente
-MODEL_PATH = "trained_plant_disease_model.h5"
-if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
-    gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+
+#MODEL_PATH = "trained_plant_disease_model.h5"
+#if not os.path.exists(MODEL_PATH):
+    #url = "https://drive.google.com/uc?id=1Bag5z34K_rfMGBmcpS8w2ApEvdZ4cZ5e&export=download"
+    #gdown.download(url, MODEL_PATH, quiet=False, fuzzy=True)
+
+st.title("Carga de modelo desde Dropbox (sin requests)")
+
+@st.cache_resource
+def download_and_load_model():
+    url = "https://www.dropbox.com/scl/fi/ho1zdsywpknz4h919i1yq/trained_plant_disease_model.h5?rlkey=5fbpavp394e5zkna92kpipasw&st=s526h6yy&dl=1"
+    output_path = "modelo.h5"
+    #Descargar el archivo desde Dropbox
+    urllib.request.urlretrieve(url, output_path)
+
+    #Cargar el modelo
+    model = load_model(output_path)
+    return model
+
+with st.spinner("Descargando y cargando modelo..."):
+    model = download_and_load_model()
+
+st.success("✅ Modelo cargado exitosamente.") 
+
 
 
 
 # Función de predicción
-def model_prediction(test_image):
-    model = tf.keras.models.load_model(MODEL_PATH)
-    #model = tf.keras.models.load_model("trained_plant_disease_model.h5")
+def model_prediction(test_image, model): #def model_prediction(test_image): #dropbox
+    #model = tf.keras.models.load_model(MODEL_PATH)
+
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(128,128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr])  # convertir en batch
@@ -91,7 +113,8 @@ elif(app_mode=="Reconocimiento de enfermedad"):
         st.balloons()
         #st.snow()
         st.write("Nuestra Predicción")
-        result_index = model_prediction(test_image)
+        #result_index = model_prediction(test_image)
+        result_index = model_prediction(test_image, model) ##dropbox
         #Reading Labels
         class_name = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
                     'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew', 
